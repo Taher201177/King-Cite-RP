@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8"><meta name="viewport"content="width=device-width,initial-scale=1">
+  <title>King City RP </title>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/a2e7e2e8c0.js" crossorigin="anonymous"></script>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;font-family:'Tajawal';}
+    body{background:#121212;color:#eee;scroll-behavior:smooth;}
+    section{padding:60px 20px;}
+    #bg{position:fixed;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:-2;filter:brightness(0.5);}
+    #overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);z-index:-1;}
+    nav{position:sticky;top:0;background:rgba(18,18,18,0.8);backdrop-filter:blur(8px);display:flex;justify-content:space-around;padding:15px;z-index:10;}
+    nav a{color:#eee;text-decoration:none;font-weight:700;transition:0.3s;}nav a:hover{color:#00d8ff;}
+    .hero{height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;}
+    .hero h1{font-size:3rem;color:#00d8ff;margin-bottom:20px;animation:fadeDown 1s;}
+    .btn{padding:15px 30px;border-radius:50px;background:#00d8ff;color:#121212;font-weight:700;overflow:hidden;position:relative;cursor:pointer;text-decoration:none;transition:0.3s;}
+    .btn:hover{transform:scale(1.05);}
+    .btn:after{content:'';position:absolute;width:150px;height:150px;background:rgba(255,255,255,0.4);border-radius:50%;top:50%;left:50%;transform:translate(-50%,-50%) scale(0);transition:0.5s;}
+    .btn:active:after{transform:translate(-50%,-50%) scale(2);opacity:0;}
+    .stats, .features, .ranks{display:grid;gap:20px;text-align:center;}
+    .stats{grid-template-columns:repeat(auto-fit,minmax(200px,1fr));}
+    .features, .ranks{grid-template-columns:repeat(auto-fit,minmax(250px,1fr));}
+    .stat, .feature, .rank{background:rgba(255,255,255,0.05);padding:20px;border-radius:12px;transition:0.3s;}
+    .feature:hover, .rank:hover{background:rgba(255,255,255,0.1);transform:translateY(-5px);}
+    .feature i, .rank i{font-size:2rem;color:#00d8ff;margin-bottom:10px;}
+    .rules ul{list-style:none;max-width:600px;margin:0 auto;}
+    .rules li{background:rgba(255,255,255,0.05);margin:10px 0;padding:15px;border-radius:8px;display:flex;align-items:center;}
+    .rules li i{margin-left:15px;color:#00d8ff;font-size:1.3rem;}
+    @keyframes fadeDown{from{opacity:0;transform:translateY(-20px);}to{opacity:1;transform:translateY(0);} }
+    @keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);} }
+    form{max-width:500px;margin:0 auto;background:rgba(255,255,255,0.05);padding:30px;border-radius:12px;}
+    label{display:block;margin-bottom:8px;font-weight:700;}
+    input, textarea{width:100%;margin-bottom:20px;padding:12px;border:none;border-radius:8px;background:#222;color:#eee;}
+    input:focus, textarea:focus{outline:none;box-shadow:0 0 5px #00d8ff;}
+    .contact-btn{width:100%;padding:15px;border:none;border-radius:50px;background:#00d8ff;color:#121212;font-weight:700;cursor:pointer;transition:0.3s;}
+    .contact-btn:hover{transform:scale(1.02);}
+    .status{margin:20px auto;text-align:center;font-size:1.1rem;}
+    footer{text-align:center;color:#777;padding:20px 0;}
+  </style>
+</head>
+<body>
+  <video autoplay muted loop id="bg"><source src="https://cdn.pixabay.com/video/2023/10/15/186089-874056361_large.mp4" type="video/mp4"></video>
+  <div id="overlay"></div>
+ <nav>
+  <a href="index.html">🏠 الرئيسية</a>
+  <a href="stats.html">📈 إحصائيات</a>
+  <a href="features.html">✨ ميزات</a>
+  <a href="ranks.html">🎖️ رتب</a>
+  <a href="rules.html">📜 قوانين</a> <!-- هذا فقط ينزل داخل الصفحة -->
+  <a href="contact.html">✉️ تواصل</a>
+</nav>
+
+  <section id="home" class="hero">
+    <h1>أهلاً بك في King City RP</h1>
+    <p>سيرفر كينج ستي روبلوكس يقدم لك المتعة والحماس والرول بلاي قدم وابدا المتعة</p>
+    <a href="#contact" class="btn" style="margin-top:30px;">قدم للتفعيل الآن</a>
+    <a href="https://discord.com/oauth2/authorize?client_id=1379714423857614958&redirect_uri=YOUR_REDIRECT_URI&response_type=code&scope=identify" class="btn" style="margin-top:20px;background:#5865F2;">
+  <i class="fab fa-discord" style="margin-left:10px;"></i> تسجيل الدخول عبر ديسكورد
+</a>
+
+  </body>
+</html>
