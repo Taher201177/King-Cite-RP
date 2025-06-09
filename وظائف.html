@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>انضم إلى King City RP</title>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/a2e7e2e8c0.js" crossorigin="anonymous"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Tajawal', sans-serif;
+    }
+    body {
+      background: #121212;
+      color: #eee;
+      scroll-behavior: smooth;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    /* خلفية متحركة */
+    #bg {
+      background: url('https://raw.githubusercontent.com/Taher201177/King-Cite-RP/e1dce1df92be33a6dff58406de302c4003e17088/nalzio-undone-police-thumbnail.jpg') no-repeat center center fixed;
+      background-size: cover;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -9999;
+      filter: brightness(0.4);
+    }
+
+    .content {
+      text-align: center;
+      z-index: 10;
+      padding: 30px;
+      background-color: rgba(0, 0, 0, 0.7);
+      border-radius: 15px;
+      max-width: 500px;
+      width: 100%;
+    }
+
+    .content h1 {
+      font-size: 3rem;
+      color: #00d8ff;
+      margin-bottom: 20px;
+    }
+
+    .content p {
+      font-size: 1.2rem;
+      color: #fff;
+      margin-bottom: 30px;
+    }
+
+    .btn {
+      padding: 15px 30px;
+      border-radius: 50px;
+      background: #5865F2;
+      color: #fff;
+      font-weight: 700;
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      transform: scale(1.1);
+      background: #7289da;
+    }
+
+    .btn:after {
+      content: '';
+      position: absolute;
+      width: 150px;
+      height: 150px;
+      background: rgba(255, 255, 255, 0.4);
+      border-radius: 50%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      transition: 0.5s;
+    }
+
+    .btn:active:after {
+      transform: translate(-50%, -50%) scale(2);
+      opacity: 0;
+    }
+
+    /* أنيميشن للدخول */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .content {
+      animation: fadeIn 1s ease-out;
+    }
+  </style>
+</head>
+<body>
+  <div id="bg"></div>
+  <div class="content">
+    <h1>انضم إلى King City RP</h1>
+    <p>إذا كنت ترغب في التقديم والبدء في مغامرتك، انضم الآن إلى سيرفر King City RP عبر Discord!</p>
+    <a href="https://discord.com/oauth2/authorize?client_id=1381305350740770917&redirect_uri=https://taher201177.github.io/King-Cite-RP/&response_type=code&scope=identify" class="btn">
+      <i class="fab fa-discord" style="margin-left:10px;"></i> انضم إلى Discord
+    </a>
+  </div>
+</body>
+</html>

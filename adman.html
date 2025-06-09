@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>لوحة تحكم الإدارة - King City RP</title>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/a2e7e2e8c0.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
+  <style>
+    * {margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', sans-serif;}
+    body {
+      background: linear-gradient(135deg, #0f0f0f, #1c1c1c);
+      color: #eee;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 40px 20px;
+    }
+
+    .login-box, .dashboard {
+      background: rgba(0,0,0,0.8);
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 0 40px rgba(0, 216, 255, 0.3);
+      width: 100%;
+      max-width: 1000px;
+      animation: fadeIn 1s ease;
+    }
+
+    .login-box h2, .dashboard h2 {
+      margin-bottom: 20px;
+      color: #00d8ff;
+      text-align: center;
+    }
+
+    input[type="text"], input[type="password"] {
+      width: 100%;
+      padding: 15px;
+      margin-bottom: 20px;
+      border: none;
+      border-radius: 10px;
+      background: #222;
+      color: #fff;
+    }
+
+    button {
+      background: #00d8ff;
+      border: none;
+      padding: 15px 30px;
+      border-radius: 30px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover {
+      transform: scale(1.05);
+      background: #00c0e0;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 15px;
+      margin-top: 30px;
+    }
+    .stat-box {
+      background: rgba(255,255,255,0.05);
+      padding: 15px;
+      border-radius: 12px;
+      border-right: 4px solid #00d8ff;
+    }
+
+    canvas {
+      background: #111;
+      border-radius: 15px;
+      padding: 20px;
+      margin-top: 40px;
+    }
+
+    .back-btn {
+      margin-top: 30px;
+      display: inline-block;
+      color: #00d8ff;
+      text-decoration: none;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+    .back-btn:hover {
+      color: #fff;
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(20px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+  </style>
+</head>
+<body>
+  <div class="login-box" id="loginBox">
+    <h2>تسجيل دخول الإدارة</h2>
+    <input type="text" id="username" placeholder="اسم المستخدم">
+    <input type="password" id="password" placeholder="كلمة المرور">
+    <button onclick="login()">دخول</button>
+  </div>
+
+  <div class="dashboard" id="dashboard" style="display:none">
+    <h2>لوحة التحكم</h2>
+    <div class="stats">
+      <div class="stat-box"><strong>الذين تواصلوا:</strong><br> <ul id="contacts"><li>جاري التحميل...</li></ul></div>
+      <div class="stat-box"><strong>طلبات التفعيل:</strong><br> <ul id="applications"><li>جاري التحميل...</li></ul></div>
+      <div class="stat-box"><strong>المستخدمين الآن:</strong> <span id="userCount">0</span></div>
+    </div>
+
+    <canvas id="userChart" width="400" height="200"></canvas>
+
+    <a href="index.html" class="back-btn">⬅ الرجوع للرئيسية</a>
+  </div>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyD-PzThlJhH3oLqZKO_YXhOgwEt_Tx_LoQ",
+      authDomain: "admin-f35b8.firebaseapp.com",
+      databaseURL: "https://admin-f35b8-default-rtdb.firebaseio.com",
+      projectId: "admin-f35b8",
+      storageBucket: "admin-f35b8.appspot.com",
+      messagingSenderId: "653703593045",
+      appId: "1:653703593045:web:b8bb29b4149e6d67922e88"
+    };
+    const app = firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
+    function login() {
+      const user = document.getElementById("username").value;
+      const pass = document.getElementById("password").value;
+      if(user === "admin" && pass === "1234") {
+        document.getElementById("loginBox").style.display = "none";
+        document.getElementById("dashboard").style.display = "block";
+        updateUsers();
+        fetchContacts();
+        fetchApplications();
+        drawChart();
+      } else {
+        alert("بيانات الدخول غير صحيحة!");
+      }
+    }
+
+    function updateUsers() {
+      const usersOnline = Math.floor(Math.random() * 20) + 5;
+      document.getElementById("userCount").innerText = usersOnline;
+    }
+
+    function fetchContacts() {
+      const list = document.getElementById("contacts");
+      list.innerHTML = "";
+      db.ref("contacts").once("value", snapshot => {
+        if (snapshot.exists()) {
+          snapshot.forEach(child => {
+            const li = document.createElement("li");
+            li.textContent = child.val().name + " - " + child.val().message;
+            list.appendChild(li);
+          });
+        } else {
+          list.innerHTML = "<li>لا توجد رسائل</li>";
+        }
+      });
+    }
+
+    function fetchApplications() {
+      const list = document.getElementById("applications");
+      list.innerHTML = "";
+      db.ref("applications").once("value", snapshot => {
+        if (snapshot.exists()) {
+          snapshot.forEach(child => {
+            const li = document.createElement("li");
+            li.textContent = child.val().name + " - " + child.val().reason;
+            list.appendChild(li);
+          });
+        } else {
+          list.innerHTML = "<li>لا توجد طلبات</li>";
+        }
+      });
+    }
+
+    function drawChart() {
+      const ctx = document.getElementById('userChart').getContext('2d');
+      new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: ['الآن', 'قبل 5 دقائق', 'قبل 10 دقائق', 'قبل 15 دقيقة'],
+          datasets: [{
+            label: 'عدد المستخدمين',
+            data: [12, 9, 15, 7],
+            borderColor: '#00d8ff',
+            backgroundColor: 'rgba(0,216,255,0.2)',
+            tension: 0.3,
+            fill: true
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              labels: { color: '#eee' }
+            }
+          },
+          scales: {
+            x: {
+              ticks: { color: '#eee' }
+            },
+            y: {
+              ticks: { color: '#eee' }
+            }
+          }
+        }
+      });
+    }
+  </script>
+</body>
+</html>
